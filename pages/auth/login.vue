@@ -11,14 +11,14 @@
           Login dulu yuk, agar bisa menikmati fitur-fitur Macaiki dengan nyaman.
         </span>
       </div>
-      <form class="mx-8 mt-12 border-gray-300 md:border-b">
+      <form class="mx-8 mt-12 border-gray-300 md:border-b" method="POST" @submit.prevent="login">
         <label for="email" class="block w-full">
           <span class="font-medium text-gray-300">Email</span>
-          <input type="email" name="email" id="email" placeholder="Email" required>
+          <input type="email" name="email" id="email" placeholder="Email" required v-model="email">
         </label>
         <label for="password" class="block w-full mt-4">
           <span class="font-medium text-gray-300">Password</span>
-          <input type="password" name="password" id="password" placeholder="Password" required>
+          <input type="password" name="password" id="password" placeholder="Password" required v-model="password">
         </label>
         
         <button type="submit" class="w-full px-4 py-2 mt-4 text-white bg-purple-600 rounded hover:bg-purple-400">
@@ -52,3 +52,31 @@ input{
   @apply w-full px-4 py-2 font-light text-white bg-transparent border border-gray-300 rounded outline-none caret-purple-400 focus:border-purple-400 md:py-4;
 }
 </style>
+<script>
+//import axios
+import axios from 'axios'
+export default {
+  name: 'LoginPage',
+  
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  
+  methods: {
+    async login() {
+
+      axios.post('https://virtserver.swaggerhub.com/restuarachman/Macaiki/1.0.0/login', {
+        email: this.email,
+        password: this.password
+      })
+      .then(res => {
+        console.log(res)
+      })
+    }
+  }
+  
+}
+</script>
