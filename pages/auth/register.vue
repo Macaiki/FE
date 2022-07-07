@@ -6,7 +6,7 @@
         <router-link to="/">
           <img src="~/assets/images/logo.png" alt="background" class="w-32 mb-4 md:mx-auto">
         </router-link>
-        <span class="text-xs text-white md:hidden">
+        <span class="text-white md:hidden">
           register dulu yuk, agar bisa menikmati fitur-fitur Macaiki dengan nyaman.
         </span>
         <span class="hidden text-purple-600 text-medium md:block">
