@@ -3,7 +3,9 @@
     <BackgroundLogin/>
     <div class="absolute items-center block w-full py-8 -translate-x-1/2 -translate-y-1/2 rounded-md top-1/2 left-1/2 md:max-w-2xl md:bg-zinc-700">
       <div class="mx-8 text-center">
-        <img src="~/assets/images/logo.png" alt="background" class="w-32 mb-4 md:mx-auto">
+        <router-link to="/">
+          <img src="~/assets/images/logo.png" alt="background" class="w-32 mb-4 md:mx-auto">
+        </router-link>
         <span class="text-xs text-white md:hidden">
           register dulu yuk, agar bisa menikmati fitur-fitur Macaiki dengan nyaman.
         </span>
