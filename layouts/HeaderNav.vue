@@ -1,7 +1,7 @@
 <template>
   <nav>
     <header class="bg-neutral-800">
-      <div class="flex items-center justify-between p-4">
+      <div class="container mx-auto flex items-center justify-between p-4">
         <div class="h-auto">
           <img src="~/assets/images/logo.png" alt="">
         </div>
