@@ -63,7 +63,7 @@ export default {
   proxy: {
     // '/api/login': 'http://108.136.47.34:8080/api/v1/login',
     // '/api/register': 'http://108.136.47.34:8080/api/v1/register',
-    '/api': {
+    '/api/': {
       target: 'http://108.136.47.34:8080/api/v1',
       pathRewrite: {  
         '^/api/': ''
