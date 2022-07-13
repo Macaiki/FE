@@ -86,7 +86,8 @@ export default {
         var loading = document.querySelector('#register-loading')
         loading.classList.add('animate-spin')
         loading.classList.toggle('hidden')
-      axios.post('https://virtserver.swaggerhub.com/restuarachman/Macaiki/1.0.0/register', {
+      this.$axios.setBaseURL('http://108.136.47.34:8080/api/v1')
+      this.$axios.post('/register', {
         email: this.email,
         username: this.username,
         password: this.password,
@@ -94,6 +95,9 @@ export default {
       })
       .then(res => {
         console.log(res)
+      }).catch(err => {
+        console.log(err)
+      }).finally(() => {
         loading.classList.remove('animate-spin')
         loading.classList.toggle('hidden')
       })
