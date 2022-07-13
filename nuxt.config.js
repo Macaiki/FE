@@ -9,7 +9,8 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      // { 'http-equiv': 'Content-Security-Policy', content:'upgrade-insecure-requests' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -50,7 +51,11 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'https://virtserver.swaggerhub.com/restuarachman/Macaiki/1.0.0',
+    // baseURL: 'http://108.136.47.34:8080/api/v1',
+    proxy: true,
+  },
+  proxy: {
+    '/api': 'http://170.39.194.16/api/v1'
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
