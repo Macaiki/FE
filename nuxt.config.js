@@ -24,6 +24,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/api',
+    '~/plugins/axios'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -55,7 +57,8 @@ export default {
     proxy: true,
   },
   proxy: {
-    '/api': 'http://170.39.194.16/api/v1'
+    '/api/login': 'http://108.136.47.34:8080/api/v1/login',
+    '/api/register': 'http://108.136.47.34:8080/api/v1/register'
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
