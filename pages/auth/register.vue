@@ -86,7 +86,7 @@ export default {
         var loading = document.querySelector('#register-loading')
         loading.classList.add('animate-spin')
         loading.classList.toggle('hidden')
-      this.$axios.setBaseURL('http://108.136.47.34:8080/api/v1')
+      this.$axios.setBaseURL('https://108.136.47.34:8080/api/v1')
       this.$axios.post('/register', {
         email: this.email,
         username: this.username,
