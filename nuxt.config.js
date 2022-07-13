@@ -40,6 +40,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/proxy'
     // '@nuxtjs/auth-next'
   ],
   auth: {
@@ -52,10 +53,17 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     // baseURL: 'http://108.136.47.34:8080/api/v1',
+    baseURL: '/',
+    browserBaseURL: '/',
     proxy: true,
   },
   proxy: {
-    '/api': 'http://170.39.194.16/api/v1'
+    '/api': {
+      target: 'http://108.136.47.34:8080/api/v1',
+      pathRewrite: {  
+        '^/api/': ''
+      }
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
