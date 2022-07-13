@@ -23,7 +23,7 @@
         <h4 class="w-full my-4 text-xl text-bold">Sepedahan dari Jakarta ke Surabaya cuma 10 hari?</h4>
         <p class="my-2 text-sm">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et orci amet urna pulvinar pellentesque turpis pellentesque sapien tellus. Blandit sagittis amet velit eget semper quisque praesent at ipsum. Sed aliquam morbi molestie in consectetur. Mauris dictum sed consequat pellentesque malesuada dui dictum. Tincidunt nisl, velit risus tempus massa dictum a. Nulla euismod, nisi euismod euismod euismod, nisl nisi ipsum.
-          <router-link to="/post" class="text-blue-500 cursor-pointer hover:text-blue-300">...Baca Selengkapnya</router-link>
+          <router-link to="/post" class="text-blue-500 cursor-pointer hover:text-blue-300" v-if="page === 'index'">...Baca Selengkapnya</router-link>
         </p>
       </div>
     </div>
@@ -33,14 +33,14 @@
     <div class="flex justify-between px-8 py-2 text-sm">
       <div class="flex justify-between">
         <div class="flex">
-          <span class="flex items-center px-8 py-2 border border-white rounded-l-lg cursor-pointer hover:bg-gray-600" :class="[isLiked ? 'text-purple-600':'text-white', '']">
+          <span class="flex items-center px-8 py-2 border border-gray-600 rounded-l-lg cursor-pointer hover:bg-gray-600" :class="[isLiked ? 'text-purple-600':'text-white', '']">
             <svg class="w-4 h-4 mr-4" :class="[isLiked ? 'stroke-purple-600':'stroke-white', '']" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 12.6666V3.33325" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M3.33325 7.99992L7.99992 3.33325L12.6666 7.99992" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             112K
           </span>
-          <span class="flex items-center px-8 py-2 text-sm text-white border border-white rounded-r-lg cursor-pointer hover:bg-gray-600" :class="[isDislike ? 'text-purple-600':'text-white', '']">
+          <span class="flex items-center px-8 py-2 text-sm text-white border border-gray-600 rounded-r-lg cursor-pointer hover:bg-gray-600" :class="[isDislike ? 'text-purple-600':'text-white', '']">
             <svg class="w-4 h-4" :class="[isDislike ? 'stroke-purple-600':'stroke-white', '']" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 3.33325V12.6666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M12.6666 8L7.99992 12.6667L3.33325 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -48,7 +48,7 @@
           </span>
         </div>
         <div class="flex">
-          <router-link to="/post  " class="flex items-center px-4 py-2 ml-6 rounded-lg cursor-pointer group hover:bg-gray-700">
+          <router-link to="/post" class="flex items-center px-4 py-2 ml-6 rounded-lg cursor-pointer group hover:bg-gray-700">
             <svg class="w-6 h-6 stroke-white" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M13 6.66669C13.0023 7.5466 12.7967 8.41461 12.4 9.20002C11.9296 10.1412 11.2065 10.9328 10.3116 11.4862C9.41677 12.0396 8.3855 12.3329 7.33333 12.3334C6.45342 12.3356 5.58541 12.1301 4.8 11.7334L1 13L2.26667 9.20002C1.86995 8.41461 1.66437 7.5466 1.66667 6.66669C1.66707 5.61452 1.96041 4.58325 2.51381 3.68839C3.06722 2.79352 3.85884 2.0704 4.8 1.60002C5.58541 1.20331 6.45342 0.997725 7.33333 1.00002H7.66667C9.05623 1.07668 10.3687 1.66319 11.3528 2.64726C12.3368 3.63132 12.9233 4.94379 13 6.33335V6.66669Z" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -79,6 +79,10 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    page: {
+      type: String,
+      default: 'post'
     }
   },
   data() {
