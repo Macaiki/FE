@@ -13,9 +13,25 @@
 </template>
 
 <script>
-import HeaderNav from '~/layouts/HeaderNav.vue'
+import HeaderNav from '~/layouts/HeaderNav.vue';
+import {mapActions,mapState} from 'vuex'
+
 export default {
   components: { HeaderNav },
-  name: 'IndexPage'
+  name: 'IndexPage',
+  computed: {
+    threads () {
+      return this.$store.state.threads.threads
+    }
+  },
+  mounted() {
+    this.handleGetThreads();
+    console.log(this.threads)
+  },
+  methods: {
+        ...mapActions('threads',['handleGetThreads']),
+
+
+  },
 }
 </script>

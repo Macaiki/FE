@@ -69,6 +69,8 @@ input{
 <script>
 //import axios
 import axios from 'axios'
+import {mapActions,mapState} from 'vuex'
+
 export default {
   name: 'registerPage',
   
@@ -82,21 +84,18 @@ export default {
   },
   
   methods: {
+    ...mapActions('register',['handleRegister']),
     async register() {
         var loading = document.querySelector('#register-loading')
         loading.classList.add('animate-spin')
         loading.classList.toggle('hidden')
-      axios.post('https://virtserver.swaggerhub.com/restuarachman/Macaiki/1.0.0/register', {
-        email: this.email,
-        username: this.username,
-        password: this.password,
-        confirmpassword: this.confirmpassword
-      })
-      .then(res => {
-        console.log(res)
-        loading.classList.remove('animate-spin')
-        loading.classList.toggle('hidden')
-      })
+        const payload = {
+               email: this.email,
+               username: this.username,
+               password: this.password,
+               passwordConfirmation: this.confirmpassword
+        }
+        this.handleRegister(payload)
     }
   }
   
