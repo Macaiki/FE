@@ -13,15 +13,23 @@
 </template>
 
 <script>
-import HeaderNav from '~/layouts/HeaderNav.vue'
-import { darkMode } from '~/tailwind.config'
+import HeaderNav from '~/layouts/HeaderNav.vue';
+import {mapActions,mapState} from 'vuex'
+
 export default {
   components: { HeaderNav },
   name: 'IndexPage',
-  data(){
-    return {
-      page: "index"
+  computed: {
+    threads () {
+      return this.$store.state.threads.threads
     }
+   },
+   mounted() {
+    this.handleGetThreads();
+    console.log(this.threads)
+    },
+   methods: {
+    ...mapActions('threads',['handleGetThreads']),
+   }
   }
-}
 </script>
