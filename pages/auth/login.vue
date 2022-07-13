@@ -76,7 +76,7 @@ export default {
         var loading = document.querySelector('#login-loading')
         loading.classList.add('animate-spin')
         loading.classList.toggle('hidden')
-      axios.post('/login', {
+      axios.post('/api/login', {
         email: this.email,
         password: this.password
       })
