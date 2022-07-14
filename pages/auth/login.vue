@@ -68,10 +68,17 @@ export default {
     return {
       email: '',
       password: '',
-      message: null
+      message: null,
+      token: null,
     }
   },
-  
+  mounted(){
+    this.token = localStorage.getItem('token')?localStorage.getItem('token'):null
+    if(this.token){
+      this.$router.push('/')
+
+    }
+  },
   methods: {
     async login() {
       var loading = document.querySelector('#login-loading')
