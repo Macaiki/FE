@@ -1,13 +1,18 @@
 <template>
   <div class="w-full">
     <header-nav></header-nav>
+
+
+
     <div class="container flex justify-between mx-auto">
       <div class="block w-8/12">
         <PostDetail  v-for="item in threads" :key="item.id" :item="item" :page="page"></PostDetail>  
       </div>
       <div class="w-4/12">
-        <sidebar-index></sidebar-index>
+        <sidebar-index>
+        </sidebar-index>
       </div>
+
     </div>
   </div>
 </template>
@@ -26,18 +31,30 @@ export default {
     }
   },
   computed: {
+      getThreadsInStore() {
+        return this.$store.state.threads.threads ;
+      },
+      getPersonalUserInStore() {
+        return this.$store.state.users.user
+      }
    },
    mounted() {
     this.token = localStorage.getItem('token')?localStorage.getItem('token'):null
     if(this.token){
-      this.$store.dispatch('getUser',this.token)
+      this.getUser(this.token)
     }else{
       this.$router.push('/auth/login')
     }
     this.handleGetThreads();
     },
    methods: {
-    ...mapActions('threads',['handleGetThreads']),
+    ...mapActions({
+        handleGetThreads: 'threads/handleGetThreads',
+
+        // user
+
+        getUser: 'users/handelGetUser',
+    }),
    }
   }
 </script>
