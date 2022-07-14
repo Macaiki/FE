@@ -67,21 +67,28 @@ export default {
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      message: null
     }
   },
   
   methods: {
     async login() {
-        var loading = document.querySelector('#login-loading')
-        loading.classList.add('animate-spin')
-        loading.classList.toggle('hidden')
+      var loading = document.querySelector('#login-loading')
+      this.message = null
+      loading.classList.add('animate-spin')
+      loading.classList.toggle('hidden')
       axios.post('/api/login', {
         email: this.email,
         password: this.password
       })
       .then(res => {
-        console.log(res)
+        // console.log(res)
+        localStorage.setItem('token', res.data.Data.token)
+        this.$router.push('/')
+      }).catch(err => {
+        this.message = err.response.data.Meta.Message
+      }).finally(() => {
         loading.classList.remove('animate-spin')
         loading.classList.toggle('hidden')
       })

@@ -22,7 +22,7 @@ export default {
     '~/assets/css/main.css'
   ],
   target: 'static',
-  ssr: false,
+  // ssr: false,
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -60,6 +60,7 @@ export default {
     baseURL: '/',
     browserBaseURL: '/',
     proxy: true,
+    prefix: 'http://108.136.47.34:8080/api/v1/login'
   },
   proxy: {
     // '/api/login': {
@@ -70,10 +71,12 @@ export default {
     // },
     // '/api/register': 'http://108.136.47.34:8080/api/v1/register',
     '/api': {
-      target: 'http://108.136.47.34:8080/api/v1',
-      // pathRewrite: {  
-      //   '^/api/': ''
-      // }
+      target: 'http://108.136.47.34:8080/api/v1/login',
+      pathRewrite: {  
+        '^/api/': ''
+      },
+      secure: false,
+      changeOrigin: true
     }
   },
 
