@@ -77,7 +77,7 @@ export default {
   name: 'PostDetail',
   props: {
     item: {
-      type: String,
+      type: Object,
       required: true
     },
     page: {

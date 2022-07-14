@@ -21,9 +21,13 @@ export default {
   css: [
     '~/assets/css/main.css'
   ],
+  target: 'static',
+  // ssr: false,
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/api',
+    '~/plugins/axios'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -56,13 +60,23 @@ export default {
     baseURL: '/',
     browserBaseURL: '/',
     proxy: true,
+    prefix: 'http://108.136.47.34:8080/api/v1/login'
   },
   proxy: {
+    // '/api/login': {
+    //   target: 'http://108.136.47.34:8080/api/v1/login',
+    //   pathRewrite: {
+    //     '^/api/login': ''
+    //   },
+    // },
+    // '/api/register': 'http://108.136.47.34:8080/api/v1/register',
     '/api': {
-      target: 'http://108.136.47.34:8080/api/v1',
+      target: 'http://108.136.47.34:8080/api/v1/login',
       pathRewrite: {  
         '^/api/': ''
-      }
+      },
+      secure: false,
+      changeOrigin: true
     }
   },
 
