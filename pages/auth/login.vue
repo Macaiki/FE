@@ -78,7 +78,7 @@ export default {
       this.message = null
       loading.classList.add('animate-spin')
       loading.classList.toggle('hidden')
-      axios.post('http://108.136.47.34:8080/api/v1/login', {
+      axios.post('/api/login', {
         email: this.email,
         password: this.password
       })
