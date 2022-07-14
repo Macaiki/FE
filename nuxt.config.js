@@ -57,26 +57,30 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     // baseURL: 'http://108.136.47.34:8080/api/v1',
-    baseURL: '/',
-    browserBaseURL: '/',
+    baseURL: 'http://108.136.47.34:8080/api/v1',
+    browserBaseURL: 'http://108.136.47.34:8080/api/v1',
     proxy: true,
-    prefix: 'http://108.136.47.34:8080/api/v1/login'
+    prefix: 'http://108.136.47.34:8080/api/v1'
   },
   proxy: {
-    // '/api/login': {
-    //   target: 'http://108.136.47.34:8080/api/v1/login',
-    //   pathRewrite: {
-    //     '^/api/login': ''
-    //   },
-    // },
-    // '/api/register': 'http://108.136.47.34:8080/api/v1/register',
     '/api': {
-      target: 'http://108.136.47.34:8080/api/v1/login',
+      target: 'http://108.136.47.34:8080/api/v1',
       pathRewrite: {  
-        '^/api/': ''
+        '^/api': ''
       },
       secure: false,
       changeOrigin: true
+    }
+  },
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: 'http://108.136.47.34:8080/api/v1'
+    }
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: 'http://108.136.47.34:8080/api/v1'
     }
   },
 
