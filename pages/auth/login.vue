@@ -83,7 +83,7 @@ export default {
         password: this.password
       })
       .then(res => {
-        // console.log(res)
+        console.log(res)
         localStorage.setItem('token', res.data.Data.token)
         this.$router.push('/')
       }).catch(err => {
