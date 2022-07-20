@@ -3,6 +3,7 @@
     <header-nav></header-nav>
     <div class="container flex justify-between mx-auto">
       <div class="block w-8/12 m-4">
+        <CreatePost></CreatePost>
         <PostType/>
         <nuxt />
       </div>
@@ -18,9 +19,10 @@
 import HeaderNav from '~/components/HeaderNav.vue';
 import {mapActions,mapGetters} from 'vuex'
 import PostType from '~/components/PostType.vue';
+import CreatePost from '~/components/CreatePost.vue';
 
 export default {
-  components: { HeaderNav, PostType },
+  components: { HeaderNav, PostType, CreatePost },
   name: 'IndexPage',
   data(){
     return {

@@ -1,48 +1,31 @@
 <template>
-  <div class="flex w-full bg-slate-700">
-    <div class="w-20 h-20">
-      <img class="w-full h-full" src="https://picsum.photos/200/200" />
+  <div class="flex p-4 mx-4 rounded-xl bg-neutral-800">
+    <div class="rounded-full">
+      <img class="w-20 h-20 rounded-full" src="https://picsum.photos/200/200" />
     </div>
-    "
-    <div class="">
-      <textarea></textarea>
+    <div class="w-full">
+      <form class="block w-full">
+        <input type="text" class="w-full p-2 pb-4 text-white border-2 border-gray-700 rounded-lg bg-zinc-800" v-model="title" id="title" placeholder="Title"/>
+        <textarea v-model="body" placeholder="Isi Post" class="w-full border border-gray-700"></textarea>
+        <button class="w-64 p-3 text-white bg-purple-700 rounded-lg" type="submit">Submit</button>
+      </form>
     </div>
-    <div class="w-20 h-20">
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
-          stroke="#F6F7FC"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M8.5 10C9.32843 10 10 9.32843 10 8.5C10 7.67157 9.32843 7 8.5 7C7.67157 7 7 7.67157 7 8.5C7 9.32843 7.67157 10 8.5 10Z"
-          stroke="#F6F7FC"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M21 15L16 10L5 21"
-          stroke="#F6F7FC"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </div>
+    <!-- <div class="w-20 h-20">
+      <svg class="w-20 h-20" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>
+    </div> -->
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'CreatePost',
+  data() {
+    return {
+      title: '',
+      body: '',
+    };
+  },
+}
 </script>
 
 <style lang="scss" scoped></style>
