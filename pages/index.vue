@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import {mapActions,mapState} from 'vuex';
 // import { mapActions } from 'vuex'
 // import axios from '@nuxtjs/axios'
 export default {
@@ -34,34 +35,27 @@ export default {
     return {
       page: 'index',
       token: null,
-      threads: null,
+    }
+  },
+  computed:{
+    threads(){
+      return this.$store.state.threads.threads
     }
   },
 
-  async mounted() {
-    this.token = localStorage.getItem('token')
-    let url = '/api/threads'
-    const headers = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: 'Bearer ' + this.token,
-    }
-    await this.$axios
-      .get(url, { headers: headers })
-      .then((response) => {
-        console.log(response.data.Data)
-        this.$store.commit('threads/setThreads', response.data.Data)
-        this.threads = this.$store.state.threads.threads
+   mounted() {
+      this.getThreads();   
+      this.disableLoading();
+  },
+  methods: {
+   ...mapActions({
+      getThreads: 'threads/handleGetThreads',
+   }),
+    disableLoading(){
+      
         document.getElementById('lazyload').remove()
-      })
-      .catch((error) => {
-        console.log(error)
-        //if 401
-        if (error.response.status === 401) {
-          // localStorage.clear()
-          // this.$router.push('/auth/login')
-        }
-      })
+
+    }
   }
 }
 </script>

@@ -14,5 +14,12 @@ export default {
                 console.log(error)
             })
     },
+    handelGetPersonalUser(store,param){
+        let url = '/api/curent-user/users/1';
+        axios.get(url)
+        .then(response => {
+            console.log(response)
+        })
+    }
     
 }
