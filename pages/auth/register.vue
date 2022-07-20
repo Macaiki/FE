@@ -79,10 +79,17 @@ export default {
       email: '',
       username: '',
       password: '',
-      confirmpassword: ''
+      confirmpassword: '',
+      token: null,
     }
   },
-  
+  mounted(){
+    this.token = localStorage.getItem('token')?localStorage.getItem('token'):null
+    if(this.token){
+      this.$router.push('/')
+
+    }
+  },
   methods: {
     ...mapActions('register',['handleRegister']),
     async register() {

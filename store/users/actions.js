@@ -1,7 +1,7 @@
 import axios from 'axios';
 export default {
-    handleGetThreads(store) {
-        let url = '/api/threads';
+    handelGetUser(store, param) {
+        let url = '/api/curent-user/profile';
         const headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -9,8 +9,7 @@ export default {
         };
         axios.get(url, { headers: headers })
             .then(response => {
-                // console.log(response.data);
-                store.commit('setThreads', response.data.Data)
+                store.commit('setUser', response.data.Data)
             }).catch(error => {
                 console.log(error)
             })
