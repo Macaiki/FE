@@ -59,10 +59,10 @@ export default {
     proxy: true
   },
   proxy: {
-    '/api': {
-      target: 'http://108.136.47.34:8080',
+    '/api/': {
+      target: 'http://108.136.47.34:8080/api/v1/',
       pathRewrite: {
-        '^/api': ''
+        '^/api/': ''
       }
     }
   },
