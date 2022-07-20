@@ -21,5 +21,33 @@ export default {
                   // this.$router.push('/auth/login')
                 }
               })
+    },
+    getDetailThreads(store,param){
+        let url = `/api/threads/${param}`;
+        axios.get(url)
+        .then(response => {
+            console.log(response)
+            store.commit('setThread',response.data.Data)
+        }).catch(error => {
+            console.log(error);
+        })
+    },   
+     createThread(store,param){
+        let url = 'api/threads';
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        };
+        axios.post(url,param,{ headers: headers})
+        .then(response =>{
+            console.log(response)
+           store.dispatch('handleGetThreads');
+           
+
+        }) .catch(error => {
+            console.log(error)
+        })
+        
     }
 }
