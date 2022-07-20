@@ -2,7 +2,7 @@
   <div class="m-4 rounded-xl bg-neutral-800">
     <div class="block px-8 py-4">
       <div class="flex justify-between">
-        <div class="flex">
+        <!-- <div class="flex">
           <div class="w-10 h-10 mr-4 rounded-full">
             <img :src="item.userProfilePictureURL" class="w-10 h-10 mr-2 rounded-full" />
           </div>
@@ -14,7 +14,7 @@
               <span class="text-sm" v-if="item.userProfession !== ''">{{ item.userProfession }} ·</span><span class="text-sm ">{{ waktu }}</span> <span class="text-sm" v-if="edited!==null"> ·  {{ edited }}</span>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="text-white">
           <img :src="item.imageURL" class="w-6 h-6 mr-2 rotate-90 lg:hidden"/>
         </div>
@@ -23,7 +23,6 @@
         <h4 class="w-full my-4 text-xl text-bold">{{ item.title }}</h4>
         <p class="my-2 text-sm">
           {{ item.body }}
-          <nuxt-link :to="'/post/' + item.ID" class="text-blue-500 cursor-pointer hover:text-blue-300">...Baca Selengkapnya</nuxt-link>
         </p>
       </div>
     </div>
@@ -48,12 +47,6 @@
           </span>
         </div>
         <div class="flex">
-          <router-link to="/post" class="flex items-center px-4 py-2 ml-6 rounded-lg cursor-pointer group hover:bg-gray-700">
-            <svg class="w-6 h-6 stroke-white" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13 6.66669C13.0023 7.5466 12.7967 8.41461 12.4 9.20002C11.9296 10.1412 11.2065 10.9328 10.3116 11.4862C9.41677 12.0396 8.3855 12.3329 7.33333 12.3334C6.45342 12.3356 5.58541 12.1301 4.8 11.7334L1 13L2.26667 9.20002C1.86995 8.41461 1.66437 7.5466 1.66667 6.66669C1.66707 5.61452 1.96041 4.58325 2.51381 3.68839C3.06722 2.79352 3.85884 2.0704 4.8 1.60002C5.58541 1.20331 6.45342 0.997725 7.33333 1.00002H7.66667C9.05623 1.07668 10.3687 1.66319 11.3528 2.64726C12.3368 3.63132 12.9233 4.94379 13 6.33335V6.66669Z" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="ml-2 text-white">Comment</span>
-          </router-link>
           <div class="flex items-center px-4 py-2 ml-6 rounded-lg cursor-pointer group hover:bg-gray-700">
             <svg class="w-6 h-6 stroke-white" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 5.33325C13.1046 5.33325 14 4.43782 14 3.33325C14 2.22868 13.1046 1.33325 12 1.33325C10.8954 1.33325 10 2.22868 10 3.33325C10 4.43782 10.8954 5.33325 12 5.33325Z" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
@@ -79,10 +72,6 @@ export default {
     item: {
       type: Object,
       required: true
-    },
-    page: {
-      type: String,
-      default: 'post'
     }
   },
   data() {
@@ -119,14 +108,6 @@ export default {
         id: this.item.id
       })
     },
-    goTo(){
-      this.$router.push({
-        name: 'post',
-        params: {
-          id: this.item.id
-        }
-      })
-    }
   }
 }
 </script>
