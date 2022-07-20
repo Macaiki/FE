@@ -4,44 +4,44 @@
       <div class="flex justify-between">
         <div class="flex">
           <div class="w-10 h-10 mr-4 rounded-full">
-            <img src="~/assets/images/pict-profile.jpg" class="w-10 h-10 mr-2 rounded-full" />
+            <img :src="item.userProfilePictureURL" class="w-10 h-10 mr-2 rounded-full" />
           </div>
           <div class="block">
             <div class="w-full">
-              <span class="text-white text-semibold">Design Yiin</span> · <span class="text-blue-500 cursor-pointer hover:text-blue-300">Follow</span>
+              <span class="text-white text-semibold">{{ item.userName }}</span> · <span class="text-blue-500 cursor-pointer hover:text-blue-300" v-if="item.isFollowed == 0">Follow</span>
             </div>
             <div class="w-full text-gray-300">
-              <span class="text-sm">Content Creator</span> · <span class="text-sm ">1 hour ago</span>
+              <span class="text-sm">{{ item.userProfession }}</span> · <span class="text-sm ">{{ waktu }}</span> <span class="text-sm" v-if="edited!==null"> ·  {{ edited }}</span>
             </div>
           </div>
         </div>
         <div class="text-white">
-          <img src="~/assets/svg/more-horizontal.svg" class="w-6 h-6 mr-2 rotate-90 lg:hidden"/>
+          <img :src="item.imageURL" class="w-6 h-6 mr-2 rotate-90 lg:hidden"/>
         </div>
       </div>
       <div class="block text-white">
-        <h4 class="w-full my-4 text-xl text-bold">Sepedahan dari Jakarta ke Surabaya cuma 10 hari?</h4>
+        <h4 class="w-full my-4 text-xl text-bold">{{ item.title }}</h4>
         <p class="my-2 text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et orci amet urna pulvinar pellentesque turpis pellentesque sapien tellus. Blandit sagittis amet velit eget semper quisque praesent at ipsum. Sed aliquam morbi molestie in consectetur. Mauris dictum sed consequat pellentesque malesuada dui dictum. Tincidunt nisl, velit risus tempus massa dictum a. Nulla euismod, nisi euismod euismod euismod, nisl nisi ipsum.
+          {{ item.body }}
           <router-link to="/post" class="text-blue-500 cursor-pointer hover:text-blue-300" v-if="page === 'index'">...Baca Selengkapnya</router-link>
         </p>
       </div>
     </div>
     <div class="block"> 
-      <img src="~/assets/images/pict-post.jpg" class="w-full px-8 lg:px-0" />
+      <img :src="item.imageURL" class="w-full px-8 lg:px-0" />
     </div>
     <div class="flex justify-between px-8 py-2 text-sm">
       <div class="flex justify-between">
         <div class="flex">
-          <span class="flex items-center px-8 py-2 border border-gray-600 rounded-l-lg cursor-pointer hover:bg-gray-600" :class="[isLiked ? 'text-purple-600':'text-white', '']">
-            <svg class="w-4 h-4 mr-4" :class="[isLiked ? 'stroke-purple-600':'stroke-white', '']" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <span class="flex items-center px-8 py-2 border border-gray-600 rounded-l-lg cursor-pointer hover:bg-gray-600" :class="[item.isUpvoted !== 0 ? 'text-purple-600':'text-white', '']" @click="upvote">
+            <svg class="w-4 h-4 mr-4" :class="[item.isUpvoted !== 0 ? 'stroke-purple-600':'stroke-white', '']" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 12.6666V3.33325" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M3.33325 7.99992L7.99992 3.33325L12.6666 7.99992" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            112K
+            {{ item.upvotesCount }}
           </span>
-          <span class="flex items-center px-8 py-2 text-sm text-white border border-gray-600 rounded-r-lg cursor-pointer hover:bg-gray-600" :class="[isDislike ? 'text-purple-600':'text-white', '']">
-            <svg class="w-4 h-4" :class="[isDislike ? 'stroke-purple-600':'stroke-white', '']" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <span class="flex items-center px-8 py-2 text-sm text-white border border-gray-600 rounded-r-lg cursor-pointer hover:bg-gray-600" :class="[item.isDownvoted !== 0 ? 'text-purple-600':'text-white', '']" @click="downvote">
+            <svg class="w-4 h-4" :class="[item.isDownvoted !== 0 ? 'stroke-purple-600':'stroke-white', '']" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 3.33325V12.6666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M12.6666 8L7.99992 12.6667L3.33325 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -87,14 +87,38 @@ export default {
   },
   data() {
     return {
-      isLiked: false,
-      isDislike: false
+      edited: null,
+      waktu: null,
     }
   },
   mounted(){
-    if(this.item % 2 == 0){
-      this.isLiked = true
+    const date = new Date(this.item.createdAt)
+    this.waktu = new Intl.DateTimeFormat('id-ID', { dateStyle: 'long', timeStyle: 'medium' }).format(date)
+    if(this.item.createdAt == this.item.updatedAt){
+      this.edited = null
+    }else{
+      this.edited = "Edited"
     }
+  },
+  computed: {
+    isUpvoted: function(){
+      return this.item.isUpvoted
+    },
+    isDownvoted: function(){
+      return this.item.isDownvoted
+    }
+  },
+  methods:{
+    upvote(){
+      this.$store.commit('threads/upvote', {
+        id: this.item.id
+      })
+    },
+    downvote(){
+      this.$store.commit('threads/downvote', {
+        id: this.item.id
+      })
+    },
   }
 }
 </script>

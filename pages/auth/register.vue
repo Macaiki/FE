@@ -13,6 +13,9 @@
           Berbagi pengetahuan, cerita, hobi, dan pengalaman unik lainnya.
         </span>
       </div>
+      <div class="text-white bg-purple-600" v-if="Message != null">
+
+      </div>
       <form class="mx-8 mt-12 border-gray-300 md:border-b" method="POST" @submit.prevent="register">
         <label for="email" class="block w-full">
           <span class="font-medium text-gray-300">Email</span>
@@ -69,7 +72,7 @@ input{
 <script>
 //import axios
 import axios from 'axios'
-import {mapActions,mapState} from 'vuex'
+import {mapMutations} from 'vuex'
 
 export default {
   name: 'registerPage',
@@ -81,28 +84,37 @@ export default {
       password: '',
       confirmpassword: '',
       token: null,
+      Message: null
     }
   },
   mounted(){
     this.token = localStorage.getItem('token')?localStorage.getItem('token'):null
     if(this.token){
       this.$router.push('/')
-
     }
   },
   methods: {
-    ...mapActions('register',['handleRegister']),
     async register() {
         var loading = document.querySelector('#register-loading')
         loading.classList.add('animate-spin')
         loading.classList.toggle('hidden')
-        const payload = {
-               email: this.email,
-               username: this.username,
-               password: this.password,
-               passwordConfirmation: this.confirmpassword
-        }
-        this.handleRegister(payload)
+        axios.post('/api/register', {
+          email: this.email,
+          username: this.username,
+          password: this.password,
+          passwordConfirmation: this.confirmpassword
+        }).then(response => {
+          console.log(response)
+          this.$store.commit('users/setUser', response.data.Data)
+          // localStorage.setItem('token', response.data.Data.token)
+          this.$router.push('/auth/login', {message : 'Register Berhasil, silahkan login'})
+        }).catch(error => {
+          this.Message = "Tampaknya ada kesalahan, coba lagi"
+          console.log(error)
+        }).finally(() => {
+          loading.classList.remove('animate-spin')
+          loading.classList.toggle('hidden')  
+        })
     }
   }
   

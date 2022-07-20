@@ -2,7 +2,7 @@
   <div>
     <BackgroundLogin/>
     <div class="absolute items-center block w-full py-8 -translate-x-1/2 -translate-y-1/2 rounded-md top-1/2 left-1/2 md:max-w-2xl md:bg-zinc-700">
-      <div class="mx-8 text-center">
+      <div class="mx-8 mb-12 text-center">
         <router-link to="/">
           <img src="~/assets/images/logo.png" alt="background" class="w-32 mb-4 md:mx-auto">
         </router-link>
@@ -13,7 +13,10 @@
           Berbagi pengetahuan, cerita, hobi, dan pengalaman unik lainnya.
         </span>
       </div>
-      <form class="mx-8 mt-12 border-gray-300 md:border-b" method="POST" @submit.prevent="login">
+      <div class="py-4 mx-8 text-center text-white bg-purple-600 rounded" v-if="message !== null">
+        {{ message }}
+      </div>
+      <form class="mx-8 border-gray-300 md:border-b" method="POST" @submit.prevent="login">
         <label for="email" class="block w-full">
           <span class="font-medium text-gray-300">Email</span>
           <input type="email" name="email" id="email" placeholder="Email" required v-model="email">
@@ -76,7 +79,9 @@ export default {
     this.token = localStorage.getItem('token')?localStorage.getItem('token'):null
     if(this.token){
       this.$router.push('/')
-
+    }
+    if(this.$route.params.message){
+      this.message = this.$route.params.message
     }
   },
   methods: {
@@ -90,13 +95,14 @@ export default {
         password: this.password
       })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         localStorage.setItem('token', res.data.Data.token)
         this.$router.push('/')
       }).catch(err => {
-        this.message = err.response.data.Meta.Message
+        console.log(err.response.data.Meta.message)
+        this.message = err.response.data.Meta.message
       }).finally(() => {
-        loading.classList.remove('animate-spin')
+        loading.classList.add('animate-spin')
         loading.classList.toggle('hidden')
       })
     }

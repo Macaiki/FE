@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import HeaderNav from '~/layouts/HeaderNav.vue'
+import HeaderNav from '~/components/HeaderNav.vue'
 import AddComments from '~/components/AddComments.vue'
 export default {
   components: { HeaderNav, AddComments },
