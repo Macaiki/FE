@@ -17,7 +17,7 @@
     </div>
     <PostDetail
       v-for="item in threads"
-      :key="item.id"
+      :key="item.ID"
       :item="item"
       :page="page"
     ></PostDetail>
