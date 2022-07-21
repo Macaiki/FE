@@ -11,13 +11,20 @@ export default {
             .then(response => {
                 store.commit('setUser', response.data.Data)
             }).catch(error => {
-                console.log(error)
+                if (error.response.status === 401) {
+                    store.commit('setUser', null)
+                    this.$router.push('auth/login')
+                }else{
+                    store.commit('setUser', null)
+                    console.log(error.response.data.Message)
+                }
             })
     },
     handelGetPersonalUser(store,param){
-        let url = '/api/curent-user/users/1';
+        let url = '/api/curent-user/users/' + param;
         axios.get(url)
         .then(response => {
+            store.commit('setPersonalUser', response.data.Data)
             console.log(response)
         })
     }

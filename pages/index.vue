@@ -43,18 +43,17 @@ export default {
     }
   },
 
-   mounted() {
-      this.getThreads();   
-      this.disableLoading();
+  async mounted() {
+      await this.getThreads().then(() => {  
+        this.disableLoading();
+      })
   },
   methods: {
    ...mapActions({
       getThreads: 'threads/handleGetThreads',
    }),
     disableLoading(){
-      
         document.getElementById('lazyload').remove()
-
     }
   }
 }

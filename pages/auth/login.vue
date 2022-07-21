@@ -16,7 +16,7 @@
       <div class="py-4 mx-8 text-center text-white bg-purple-600 rounded" v-if="message !== null">
         {{ message }}
       </div>
-      <form class="mx-8 border-gray-300 md:border-b" method="POST" @submit.prevent="login">
+      <form class="mx-8 border-gray-300 md:border-b" method="POST" @submit.prevent="login()">
         <label for="email" class="block w-full">
           <span class="font-medium text-gray-300">Email</span>
           <input type="email" name="email" id="email" placeholder="Email" required v-model="email">
@@ -63,6 +63,7 @@ input{
 </style>
 <script>
 //import axios
+import { mapActions } from 'vuex'
 import axios from 'axios'
 export default {
   name: 'LoginPage',
@@ -76,21 +77,18 @@ export default {
     }
   },
   mounted(){
-    this.token = localStorage.getItem('token')?localStorage.getItem('token'):null
-    if(this.token){
-      this.$router.push('/')
-    }
+    localStorage.removeItem('token')
     if(this.$route.params.message){
       this.message = this.$route.params.message
     }
   },
   methods: {
-    async login() {
+    login() {
       var loading = document.querySelector('#login-loading')
       this.message = null
       loading.classList.add('animate-spin')
       loading.classList.toggle('hidden')
-      axios.post('/api/login', {
+        axios.post('/api/login', {
         email: this.email,
         password: this.password
       })
@@ -105,8 +103,10 @@ export default {
         loading.classList.add('animate-spin')
         loading.classList.toggle('hidden')
       })
-    }
-  }
-  
+    },
+    ...mapActions({
+        getUser: 'users/handelGetUser',
+    }),
+   }
 }
 </script>

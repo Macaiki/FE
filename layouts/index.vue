@@ -38,19 +38,16 @@ export default {
         return this.$store.state.users.user
       }
    },
-   mounted() {
+  async mounted() {
     this.token = localStorage.getItem('token')?localStorage.getItem('token'):null
     if(this.token){
-      this.getUser(this.token)
+      await this.getUser(this.token)
     }else{
       this.$router.push('/auth/login')
     }
-    this.threads = this.handleGetThreads()
-    },
+  },
    methods: {
     ...mapActions({
-        handleGetThreads: 'threads/handleGetThreads',
-        // user
         getUser: 'users/handelGetUser',
     }),
    }
