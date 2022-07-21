@@ -26,5 +26,8 @@ export default {
                 }
             }
         });
+    },
+    setThread(state,param){
+        state.thread = param;
     }
 }
