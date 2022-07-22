@@ -5,7 +5,7 @@
       <textarea class="w-full p-2 text-white border-2 border-gray-700 rounded-lg bg-zinc-800" v-model="komentar" id="comment"></textarea>
     </div>
     <div class="flex items-start w-2/12 m-4">
-      <button class="w-full p-3 text-white bg-purple-700 rounded-lg" type="submit">Submit</button>
+      <button class="w-full p-3 text-white bg-purple-700 rounded-lg" type="submit" @click="addComment">Submit</button>
     </div>
   </form>
 </template>
@@ -24,5 +24,18 @@ export default{
       komentar: ''
     }
   },
+  methods: {
+    addComment(){
+    let data = {
+        comment: this.komentar,
+      }
+    let url = 'api/threads';
+    this.$axios.post(url,data).then(response => {
+        console.log(response)
+      }).catch(error => {
+        console.log(error)
+      })
+    }
+  }
 }
 </script>

@@ -13,8 +13,8 @@
           Berbagi pengetahuan, cerita, hobi, dan pengalaman unik lainnya.
         </span>
       </div>
-      <div class="text-white bg-purple-600" v-if="Message != null">
-
+      <div class="py-4 mx-8 text-center text-white bg-purple-600 rounded" v-if="Message != null">
+        {{ Message }}
       </div>
       <form class="mx-8 mt-12 border-gray-300 md:border-b" method="POST" @submit.prevent="register">
         <label for="email" class="block w-full">
@@ -105,11 +105,19 @@ export default {
           passwordConfirmation: this.confirmpassword
         }).then(response => {
           console.log(response)
-          this.$store.commit('users/setUser', response.data.Data)
-          // localStorage.setItem('token', response.data.Data.token)
-          this.$router.push('/auth/login', {message : 'Register Berhasil, silahkan login'})
+          //200
+          if(response.status == 200 && response.data.Meta.message == 'OK'){
+            setInterval(() => {
+              loading.classList.toggle('hidden')
+              loading.classList.remove('animate-spin')
+              this.Message = 'Register Success, Please Login'
+            }, 5000);
+            this.$router.push('/auth/login')
+          }else if(response.status == 200 && response.data.Meta.message == 'Username already used'){
+            this.Message = 'Username already used'
+          }
         }).catch(error => {
-          this.Message = "Tampaknya ada kesalahan, coba lagi"
+          this.Message = error.response.data.Meta.message
           console.log(error)
         }).finally(() => {
           loading.classList.remove('animate-spin')

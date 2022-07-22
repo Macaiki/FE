@@ -1,12 +1,12 @@
 <template>
-  <div class="flex p-4 mx-4 rounded-xl bg-neutral-800">
-    <div class="rounded-full">
+  <div class="flex gap-4 p-4 mx-4 rounded-xl bg-neutral-800">
+    <div class="w-20 h-20 rounded-full">
       <img class="w-20 h-20 rounded-full" src="https://picsum.photos/200/200" />
     </div>
     <div class="w-full" >
       <form class="block w-full" @submit.prevent="createThreads">
         <input type="text" class="w-full p-2 pb-4 text-white border-2 border-gray-700 rounded-lg bg-zinc-800" v-model="title" id="title" placeholder="Title"/>
-        <textarea v-model="body" placeholder="Isi Post" class="w-full border border-gray-700"></textarea>
+        <textarea v-model="body" placeholder="Isi Post" class="w-full p-2 text-white border-2 border-gray-700 rounded-lg bg-zinc-800"></textarea>
         <button class="w-64 p-3 text-white bg-purple-700 rounded-lg" type="submit">Submit</button>
       </form>
     </div>

@@ -1,6 +1,6 @@
 export default {
     setThreads(state, param) {
-        state.threads = param;
+        state.threads = param
     },
     addThreads(state, param){
         state.threads.splice(0,0, param);

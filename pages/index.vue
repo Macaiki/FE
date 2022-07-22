@@ -26,8 +26,6 @@
 
 <script>
 import {mapActions,mapState} from 'vuex';
-// import { mapActions } from 'vuex'
-// import axios from '@nuxtjs/axios'
 export default {
   layout: 'index',
   name: 'IndexPage',
@@ -40,12 +38,15 @@ export default {
   computed:{
     threads(){
       return this.$store.state.threads.threads
+    },
+    user(){
+      return this.$store.state.users.user
     }
   },
 
   async mounted() {
       await this.getThreads().then(() => {  
-        this.disableLoading();
+        this.disableLoading()
       })
   },
   methods: {

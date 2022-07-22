@@ -18,19 +18,34 @@
     <div class="m-4 rounded-xl bg-neutral-800">
       <div class="block px-8 py-4">
         <div class="flex justify-between">
-          <!-- <div class="flex">
-          <div class="w-10 h-10 mr-4 rounded-full">
-            <img :src="threads.userProfilePictureURL" class="w-10 h-10 mr-2 rounded-full" />
-          </div>
-          <div class="block">
-            <div class="w-full">
-              <span class="text-white text-semibold">{{ threads.userName }}</span> · <span class="text-blue-500 cursor-pointer hover:text-blue-300" v-if="threads.isFollowed == 0">Follow</span>
+          <div class="flex">
+            <div class="w-10 h-10 mr-4 rounded-full">
+              <!-- <img
+              :src="user.profileImageURL" class="w-10 h-10 mr-2 rounded-full" />
+              -->
             </div>
-            <div class="w-full text-gray-300">
-              <span class="text-sm" v-if="threads.userProfession !== ''">{{ threads.userProfession }} ·</span><span class="text-sm ">{{ waktu }}</span> <span class="text-sm" v-if="edited!==null"> ·  {{ edited }}</span>
+            <div class="block">
+              <div class="w-full">
+                <span class="text-white text-semibold">{{
+                  user.username
+                }}</span>
+                ·
+                <span
+                  class="text-blue-500 cursor-pointer hover:text-blue-300"
+                  v-if="user.isFollowed == 0"
+                  >Follow</span
+                >
+              </div>
+              <div class="w-full text-gray-300">
+                <span class="text-sm" v-if="user.profession !== ''"
+                  >{{ user.profession }} ·</span
+                ><span class="text-sm">{{ waktu }}</span>
+                <span class="text-sm" v-if="edited !== null">
+                  · {{ edited }}</span
+                >
+              </div>
             </div>
           </div>
-        </div> -->
           <div class="text-white">
             <img
               :src="threads.imageURL"
@@ -122,9 +137,7 @@
             </span>
           </div>
           <div class="flex">
-            <div
-              class="flex px-4 py-2 ml-6 rounded-lg cursor-pointer threadss-center group hover:bg-gray-700"
-            >
+            <div class="flex px-4 py-2 ml-6 rounded-lg cursor-pointer threadss-center group hover:bg-gray-700">
               <svg
                 class="w-6 h-6 stroke-white"
                 viewBox="0 0 16 16"
@@ -183,31 +196,119 @@ import AddComments from '~/components/AddComments.vue'
 import axios from 'axios'
 export default {
   components: { HeaderNav, AddComments },
-  layout: 'index',
+  layout: 'post',
   name: 'PostPage',
-  mounted() {
-    axios
+  async mounted() {
+    await axios
       .get('/api/threads/' + this.$route.params.id)
-      .then((response) => {
+      .then(async (response) => {
         this.threads = response.data.Data
-        console.log(this.threads.title)
-        // axios.get('/api/users/' + this.item.user_id).then((response) => {
-        //   console.log(response.data.Data)
-        //   this.user = response.data.Data
-        // })
-        document.getElementById('lazyload').remove()
+        console.log(this.threads)
+        const header = {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        }
+        await axios
+          .get('/api/users/' + this.threads.userID, { headers: header })
+          .then((response) => {
+            this.user = response.data.Data
+            console.log(this.user)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       })
       .catch((error) => {
         console.log(error)
       })
+      .finally(() => {
+        document.getElementById('lazyload').remove()
+      }),
+      await axios
+        .get('/api/threads/' + this.$route.params.id + '/comments')
+        .then((response) => {
+          this.comments = response.data.Data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
   },
   data() {
     return {
       item: null,
-      user: null,
+      user: {
+        'profileImageURL': '',
+        'username': '',
+        'isFollowed': false,
+        'profession': '',
+      },
       comment: [],
-      threads: []
+      threads: [],
+      isUpvoted: 0,
+      isDownvoted: 0,
     }
+  },
+  methods: {
+    upvote() {
+      const header = {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }
+      if (this.isUpvoted === 0) {
+        this.$axios
+          .post(
+            '/api/threads/' + this.$route.params.id + '/upvotes',
+            {},
+            { headers: header }
+          )
+          .then((response) => {
+            this.threads = response.data.Data
+            this.isUpvoted = 1
+            this.isDownvoted = 0
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      } else {
+        this.$axios
+          .delete('/api/threads/' + this.$route.params.id + '/upvotes')
+          .then((response) => {
+            this.threads = response.data.Data
+            this.isUpvoted = 0
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }
+    },
+    downvote() {
+      const header = {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }
+      if (this.isDownvoted === 0) {
+        this.$axios
+          .post('/api/threads/' + this.$route.params.id + '/downvotes')
+          .then((response) => {
+            this.threads = response.data.Data
+            this.isDownvoted = 1
+            this.isUpvoted = 0
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      } else {
+        this.$axios
+          .delete('/api/threads/' + this.$route.params.id + '/downvotes')
+          .then((response) => {
+            this.threads = response.data.Data
+            this.isDownvoted = 0
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }
+    },
   },
 }
 </script>

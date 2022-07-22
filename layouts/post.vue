@@ -3,7 +3,6 @@
     <header-nav></header-nav>
     <div class="container flex justify-between mx-auto">
       <div class="block w-8/12 m-4">
-        <CreatePost></CreatePost>
         <PostType/>
         <nuxt />
       </div>

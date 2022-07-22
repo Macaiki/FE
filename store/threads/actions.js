@@ -18,20 +18,10 @@ export default {
       }).catch((error) => {
         console.log(error)
         //if 401
-        if (error.response.status === 401) {
-          localStorage.clear()
-          this.$router.push('/auth/login')
-        }
-      })
-  },
-  getDetailThreads(store, param) {
-    let url = `/api/threads/${param}`;
-    axios.get(url)
-      .then(response => {
-        console.log(response)
-        store.commit('setThread', response.data.Data)
-      }).catch(error => {
-        console.log(error);
+        // if (error.response.status === 401) {
+        //   localStorage.clear()
+        //   this.$router.push('/auth/login')
+        // }
       })
   },
   getDetailThreads(store, param) {
@@ -46,14 +36,17 @@ export default {
   },
   createThread(store, param) {
     let url = 'api/threads';
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    };
     axios.post(url, param, {
         headers: headers
       })
       .then(response => {
         console.log(response)
         store.dispatch('handleGetThreads');
-
-
       }).catch(error => {
         console.log(error)
       })
