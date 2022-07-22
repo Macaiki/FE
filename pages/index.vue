@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <div class="w-full p-4 mx-auto mt-12 rounded-md shadow" id="lazyload">
+    <div class="w-full p-4 mx-auto mt-12 rounded-md shadow hidden" id="lazyload">
       <div class="flex space-x-4 animate-pulse">
         <div class="w-10 h-10 rounded-full bg-slate-200"></div>
         <div class="flex-1 py-1 space-y-6">
@@ -39,14 +39,11 @@ export default {
     threads(){
       return this.$store.state.threads.threads
     },
-    user(){
-      return this.$store.state.users.user
-    }
   },
 
   async mounted() {
       await this.getThreads().then(() => {  
-        this.disableLoading()
+        document.querySelector('#lazyload').classList.add('hidden')
       })
   },
   methods: {
@@ -54,7 +51,7 @@ export default {
       getThreads: 'threads/handleGetThreads',
    }),
     disableLoading(){
-        document.getElementById('lazyload').remove()
+        // document.querySelector('#lazyload').classList.add('hidden')
     }
   }
 }

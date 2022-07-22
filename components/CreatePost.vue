@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-4 p-4 mx-4 rounded-xl bg-neutral-800">
     <div class="w-20 h-20 rounded-full">
-      <img class="w-20 h-20 rounded-full" src="https://picsum.photos/200/200" />
+      <img class="w-20 h-20 rounded-full" :src="user.profileImageURL" />
     </div>
     <div class="w-full" >
       <form class="block w-full" @submit.prevent="createThreads">
@@ -25,15 +25,17 @@ export default {
       body: '',
     };
   },
+  computed: {
+    user(){
+      return this.$store.state.users.user
+    }
+  },
   methods: {
     createThreads(){
-      let data = {
+      this.$store.dispatch('threads/createThread', {
         title: this.title,
         body: this.body,
-      }
-      this.$store.dispatch('threads/createThread',data);
-      this.title = '';
-      this.body = ''; 
+      })
     }
   }
 }

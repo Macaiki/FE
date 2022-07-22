@@ -20,9 +20,9 @@
         <div class="flex justify-between">
           <div class="flex">
             <div class="w-10 h-10 mr-4 rounded-full">
-              <!-- <img
+              <img
               :src="user.profileImageURL" class="w-10 h-10 mr-2 rounded-full" />
-              -->
+             
             </div>
             <div class="block">
               <div class="w-full">

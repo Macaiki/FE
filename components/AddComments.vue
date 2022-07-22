@@ -1,7 +1,7 @@
 <template>
   <form class="flex w-full">
     <div class="flex w-10/12 m-4">
-      <img src="~/assets/images/pict-profile.jpg" class="w-16 h-16 mr-4 rounded-full"/>
+      <img :src="user.profileImageURL" class="w-16 h-16 mr-4 rounded-full"/>
       <textarea class="w-full p-2 text-white border-2 border-gray-700 rounded-lg bg-zinc-800" v-model="komentar" id="comment"></textarea>
     </div>
     <div class="flex items-start w-2/12 m-4">
@@ -22,6 +22,11 @@ export default{
   data() {
     return {
       komentar: ''
+    }
+  },
+  computed: {
+    user(){
+      return this.$store.state.users.user
     }
   },
   methods: {

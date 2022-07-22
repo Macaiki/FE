@@ -9,6 +9,7 @@ export default {
         };
         axios.get(url, { headers: headers })
             .then(response => {
+                console.log(response.data.Data)
                 store.commit('setUser', response.data.Data)
             }).catch(error => {
                 if (error.response.status === 401) {
