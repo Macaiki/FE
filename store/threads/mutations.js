@@ -1,7 +1,7 @@
 export default {
     setThreads(state, param) {
-        if (param.length !== null) {
-            state.threads = param.reverse()
+        if (param !== null) {
+            state.threads = param.reverse() 
         }else{
             state.threads = []
         }
