@@ -1,6 +1,10 @@
 export default {
     setThreads(state, param) {
-        state.threads = param
+        if (param.length !== null) {
+            state.threads = param.reverse()
+        }else{
+            state.threads = []
+        }
     },
     addThreads(state, param){
         state.threads.splice(0,0, param);
